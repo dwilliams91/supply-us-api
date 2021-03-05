@@ -1,0 +1,18 @@
+[
+    {
+        "model": "supplyusapi.ClassList",
+        "pk": 1,
+        "fields": {
+            "user":1,
+            "class_name": "5th Grade"
+        }
+    },
+    {
+        "model": "supplyusapi.ClassList",
+        "pk": 2,
+        "fields": {
+            "user":1,
+            "class_name": "6th Grade"
+        }
+    }
+]

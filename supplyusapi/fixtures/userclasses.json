@@ -1,0 +1,10 @@
+[
+    {
+        "model": "supplyusapi.UserClass",
+        "pk": 1,
+        "fields": {
+            "user": 2,
+            "class_list":1
+        }
+    }
+]

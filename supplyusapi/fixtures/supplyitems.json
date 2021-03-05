@@ -1,0 +1,32 @@
+[
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 1,
+        "fields": {
+            "name": "pencils",
+            "type": 1,
+            "shopping_link":"https://www.staples.com/Dixon-Ticonderoga-Pencils-3-Hard-Dozen/product_499368?cid=BNR:499368&ci_src=17588969&ci_sku=499368&KPID=499368&cid=PS:GS:RE:RP:NB:FALSE:TXT:SV:Open:1679103750:60732599210:&gclid=Cj0KCQiAyoeCBhCTARIsAOfpKxiwBb3GY2IVF-fxucCx3qsUnqmCaCwQeJxu3ks2T_kHVEHDKibROnQaAunoEALw_wcB",
+            "imageURL":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Mx9ClJPaf8ZUOdZYZFEj5eJSjEh_9Iz2InSXj-Utofi8SOFeMTe4oFK4Q9ky-OOkh-3zLn0&usqp=CAc"
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 2,
+        "fields": {
+            "name": "markers",
+            "type": 1,
+            "shopping_link":"https://www.amazon.com/Crayola-Ultraclean-Broad-Washable-Markers/dp/B00IYDM814/ref=sr_1_5?crid=DSQ1N3VEW1XF&dchild=1&keywords=markers&qid=1614960673&s=office-products&sprefix=markers%2Coffice-products%2C194&sr=1-5",
+            "imageURL":"https://media.officedepot.com/images/f_auto,q_auto,e_sharpen,h_450/products/764180/764180_o01_crayola_broad_line_markers/764180_o01_crayola_broad_line_markers"
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 3,
+        "fields": {
+            "name": "binder",
+            "type": 2,
+            "shopping_link":"https://www.amazon.com/AmazonBasics-Round-Binder-Mixed-4-Pack/dp/B07SL5Q3RN/ref=asc_df_B07SL5Q3RN/?tag=hyprod-20&linkCode=df0&hvadid=385590137473&hvpos=&hvnetw=g&hvrand=1090611728224805563&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9013203&hvtargid=pla-848945103260&psc=1&tag=&ref=&adgrpid=77529735486&hvpone=&hvptwo=&hvadid=385590137473&hvpos=&hvnetw=g&hvrand=1090611728224805563&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9013203&hvtargid=pla-848945103260",
+            "imageURL":"https://images.uline.com/is/image//content/dam/images/S/S22000/S-21760W.jpg?$Mobile_SI$&iccEmbed=1&icc=AdobeRGB"
+        }
+    }
+]
