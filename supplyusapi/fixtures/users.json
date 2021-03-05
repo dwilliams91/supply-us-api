@@ -12,7 +12,7 @@
             "email": "david@david.com",
             "is_staff": true,
             "is_active": true,
-            "date_joined": "",
+            "date_joined": "2020-08-28T14:51:39.989Z",
             "groups": [],
             "user_permissions": []
         }
@@ -30,7 +30,7 @@
             "email": "parent@parent.com",
             "is_staff": false,
             "is_active": true,
-            "date_joined": "",
+            "date_joined": "2020-08-28T14:51:39.989Z",
             "groups": [],
             "user_permissions": []
         }
