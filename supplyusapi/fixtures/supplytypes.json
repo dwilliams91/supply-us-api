@@ -1,0 +1,16 @@
+[
+    {
+        "model": "supplyusapi.SupplyType",
+        "pk": 1,
+        "fields": {
+            "type": "writing utencil"
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyType",
+        "pk": 2,
+        "fields": {
+            "type": "organizer"
+        }
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 1,
+        "fields": {
+            "supply_item":1,
+            "type": "individual"
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 2,
+        "fields": {
+            "supply_item":1,
+            "type": "12 count"
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 3,
+        "fields": {
+            "supply_item":1,
+            "type": "24 count"
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 4,
+        "fields": {
+            "supply_item":2,
+            "type": "individual"
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 5,
+        "fields": {
+            "supply_item":2,
+            "type": "12 count"
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 6,
+        "fields": {
+            "supply_item":3,
+            "type": "individual"
+        }
+    }
+]
