@@ -1,0 +1,35 @@
+[
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 1,
+        "fields": {
+            "class_list":1,
+            "supply_item": 1,
+            "number":2,
+            "description":"mechanical",
+            "package_type":2
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 2,
+        "fields": {
+            "class_list":1,
+            "supply_item": 3,
+            "number":3,
+            "description":"red, blue, and black. 3inch",
+            "package_type":6
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 3,
+        "fields": {
+            "class_list":2,
+            "supply_item": 1,
+            "number":2,
+            "description":"pre-sharpened",
+            "package_type":2
+        }
+    }
+]
