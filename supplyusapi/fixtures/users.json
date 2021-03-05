@@ -1,0 +1,39 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$xy1ADDwHRjrh$1udU9G8itv3N78hiH08Lx3Qkomr4vQ7M63PS04y+aJQ=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "david@david.com",
+            "first_name": "David",
+            "last_name": "Williams",
+            "email": "david@david.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$xy1ADDwHRjrh$1udU9G8itv3N78hiH08Lx3Qkomr4vQ7M63PS04y+aJQ=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "parent@parent.com",
+            "first_name": "parent",
+            "last_name": "parent",
+            "email": "parent@parent.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+
+]
