@@ -3,3 +3,4 @@ from .auth import register_user
 from .classlists import ClassLists
 from .supplytypes import SupplyTypes
 from .supplyitems import SupplyItems
+from .packagetypes import PackageTypes
