@@ -32,7 +32,16 @@ class ClassLists(ViewSet):
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
-        
+    def destroy(self, request, pk=None):
+        try:
+            class_to_delete=ClassList.objects.get(pk=pk)
+            class_to_delete.delete()
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+        except class_to_delete.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
         model= ClassList
