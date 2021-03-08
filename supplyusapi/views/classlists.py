@@ -17,6 +17,21 @@ class ClassLists(ViewSet):
         # send the class to the serializer
         serializer=ClassListSerializer(all_class_lists, many=True, context={'request':request})
         return Response(serializer.data)
+    def create(self, request):
+        # get current user
+        current_user=User.objects.get(auth_token=request.auth)
+        # create a new instance of a class and put in the data
+        new_class=ClassList()
+        new_class.class_name=request.data["class_name"]
+        new_class.user=current_user
+        # save the new class unless there is a validation error
+        try:
+            new_class.save()
+            serializer=ClassListSerializer(new_class, many=False, context={'request':request})
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except ValidationError as ex:
+            return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
+
         
 class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
