@@ -10,9 +10,12 @@ from supplyusapi.models import ClassList
 
 class ClassLists(ViewSet):
     def list(self, request):
-        classlists=ClassList.objects.all()
-        print(classlists)
-        serializer=ClassListSerializer(classlists, many=True, context={'request':request})
+        # get the current signed in user
+        current_user=User.objects.get(auth_token=request.auth)
+        # get only the classes created by the user
+        all_class_lists=ClassList.objects.filter(user=current_user.id)
+        # send the class to the serializer
+        serializer=ClassListSerializer(all_class_lists, many=True, context={'request':request})
         return Response(serializer.data)
         
 class ClassListSerializer(serializers.ModelSerializer):
