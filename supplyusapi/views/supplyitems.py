@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 
 from django.http import HttpResponseServerError
 from django.core.exceptions import ValidationError
-from supplyusapi.models import SupplyItem, SupplyType
+from supplyusapi.models import SupplyItem, SupplyType, ClassListSupplyItem
 
 class SupplyItems(ViewSet):
     def list(self, request):
@@ -24,6 +24,12 @@ class SupplyItems(ViewSet):
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
+    @action(methods=['get'], detail=True)
+    def classListSupplyItem(self, request, pk=None):
+        if request.method=="GET":
+            list_of_my_class_items=ClassListSupplyItem.objects.filter(class_list=pk)
+            serializer=ClassListSupplyItemSerializer(list_of_my_class_items, many=True, context={'request':request})
+            return Response(serializer.data)
 
         
 class SupplyItemsSerializer(serializers.ModelSerializer):
@@ -31,3 +37,7 @@ class SupplyItemsSerializer(serializers.ModelSerializer):
         model=SupplyItem
         fields=('id', 'type', 'name')
         # depth=1
+class ClassListSupplyItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= ClassListSupplyItem
+        fields=('id', 'class_list', 'supply_item', 'number', 'description', 'package_type')
