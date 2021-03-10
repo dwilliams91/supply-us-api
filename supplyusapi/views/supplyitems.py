@@ -38,14 +38,16 @@ class SupplyItems(ViewSet):
             related_supply_item=SupplyItem.objects.get(pk=request.data["supplyItemId"])
             related_PackageType=PackageType.objects.get(pk=request.data["packaging"])
 
-            new_item.number=request.data["number"]
+            
             new_item.class_list=related_Class
             new_item.supply_item=related_supply_item
             new_item.package_type= related_PackageType
-            
+            new_item.number=request.data["number"]
             new_item.description=request.data["description"]
+
+            new_item.save()
             serializer=ClassListSupplyItemSerializer(new_item, many=False, context={'request':request})
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
  
 
     
