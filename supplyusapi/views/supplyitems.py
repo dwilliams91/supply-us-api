@@ -31,23 +31,37 @@ class SupplyItems(ViewSet):
             serializer=ClassListSupplyItemSerializer(list_of_my_class_items, many=True, context={'request':request})
             return Response(serializer.data)
         if request.method=="POST":
+            try:
+                new_item=ClassListSupplyItem()
 
-            new_item=ClassListSupplyItem()
+                related_Class=ClassList.objects.get(pk=request.data["classListId"])
+                related_supply_item=SupplyItem.objects.get(pk=request.data["supplyItemId"])
+                related_PackageType=PackageType.objects.get(pk=request.data["packaging"])
 
-            related_Class=ClassList.objects.get(pk=request.data["classListId"])
-            related_supply_item=SupplyItem.objects.get(pk=request.data["supplyItemId"])
-            related_PackageType=PackageType.objects.get(pk=request.data["packaging"])
+                if related_supply_item.id !=related_PackageType.supply_item_id:
+                    print("doesn't match")
+                    return Response({"reason": "supply item and package type don't align"}, status=status.HTTP_400_BAD_REQUEST)
+                
+                new_item.class_list=related_Class
+                new_item.supply_item=related_supply_item
+                new_item.package_type= related_PackageType
+                new_item.number=request.data["number"]
+                new_item.description=request.data["description"]
 
-            
-            new_item.class_list=related_Class
-            new_item.supply_item=related_supply_item
-            new_item.package_type= related_PackageType
-            new_item.number=request.data["number"]
-            new_item.description=request.data["description"]
+                new_item.save()
+                serializer=ClassListSupplyItemSerializer(new_item, many=False, context={'request':request})
 
-            new_item.save()
-            serializer=ClassListSupplyItemSerializer(new_item, many=False, context={'request':request})
+                
+            except ClassList.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            except SupplyItem.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            except PackageType.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
  
 
     
