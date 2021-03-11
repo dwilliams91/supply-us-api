@@ -45,8 +45,8 @@ class SupplyItems(ViewSet):
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
-    @action(methods=['get', 'post'], detail=False)
-    def addClassListSupplyItem(self, request, pk=None):
+    @action(methods=['get', 'post', 'delete'], detail=True)
+    def ClassListSupplyItem(self, request, pk=None):
         if request.method=="GET":
             list_of_my_class_items=ClassListSupplyItem.objects.filter(class_list=pk)
             serializer=ClassListSupplyItemSerializer(list_of_my_class_items, many=True, context={'request':request})
@@ -82,12 +82,16 @@ class SupplyItems(ViewSet):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        @action(methods=['get', 'post'], detail=True)
-        def deleteclassListSupplyItem(self, request, pk=None)
-            
- 
+        if request.method=="DELETE":
+            try:
+                item_to_delete=ClassListSupplyItem.objects.get(pk=request.data['itemId'])
+                item_to_delete.delete()
+                
+                return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-    
+            except SupplyItem.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
 
         
 class SupplyItemsSerializer(serializers.ModelSerializer):
