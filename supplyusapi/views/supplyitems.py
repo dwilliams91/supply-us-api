@@ -45,10 +45,10 @@ class SupplyItems(ViewSet):
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
-    @action(methods=['get', 'post', 'delete'], detail=True)
-    def classListSupplyItem(self, request, pk=None):
+    @action(methods=['get', 'post', 'delete'], detail=False)
+    def manageSupplyLists(self, request, pk=None):
         if request.method=="GET":
-            list_of_my_class_items=ClassListSupplyItem.objects.filter(class_list=pk)
+            list_of_my_class_items=ClassListSupplyItem.objects.filter(class_list=request.data['classId'])
             serializer=ClassListSupplyItemSerializer(list_of_my_class_items, many=True, context={'request':request})
             return Response(serializer.data)
         if request.method=="POST":
