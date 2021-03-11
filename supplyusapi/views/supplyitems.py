@@ -24,6 +24,13 @@ class SupplyItems(ViewSet):
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
+    @action(methods=['post'],detail=False)
+    def searchfilter(self,request,pk=None):
+
+        filtered_items=SupplyItem.objects.filter(name__startswith=request.data["searchTerm"])
+        serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
+        return Response(serializer.data)
+
     @action(methods=['get', 'post'], detail=True)
     def classListSupplyItem(self, request, pk=None):
         if request.method=="GET":
