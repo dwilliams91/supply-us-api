@@ -84,7 +84,7 @@ class SupplyItems(ViewSet):
 
         if request.method=="DELETE":
             try:
-                item_to_delete=ClassListSupplyItem.objects.get(pk=request.data['itemId'])
+                item_to_delete=ClassListSupplyItem.objects.get(pk=request.data['classListSupplyItemId'])
                 item_to_delete.delete()
 
                 return Response({}, status=status.HTTP_204_NO_CONTENT)
