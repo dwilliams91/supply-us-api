@@ -14,7 +14,21 @@ class SupplyItems(ViewSet):
         all_supply_items=SupplyItem.objects.all()
         serializer=SupplyItemsSerializer(all_supply_items, many=True, context={'request':request})
         return Response(serializer.data)
+    def create(self, request):
+        created_item=SupplyItem()
 
+        supply_type=SupplyType.objects.get(pk=request.data["supplyType"])
+        
+        created_item.name=request.data["name"]
+        created_item.type=supply_type
+        try:
+            # created_item.save()
+            serializer=SupplyItemsSerializer(created_item, many=False, context={'request':request})
+            return Response(serializer.data)
+
+        except SupplyType.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        
     @action(methods=['post'],detail=True)
     def typefilter(self,request, pk=None):
         # get the type that was selected
