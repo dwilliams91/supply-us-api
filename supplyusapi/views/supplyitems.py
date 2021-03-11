@@ -46,7 +46,7 @@ class SupplyItems(ViewSet):
         return Response(serializer.data)
 
     @action(methods=['get', 'post', 'delete'], detail=True)
-    def ClassListSupplyItem(self, request, pk=None):
+    def classListSupplyItem(self, request, pk=None):
         if request.method=="GET":
             list_of_my_class_items=ClassListSupplyItem.objects.filter(class_list=pk)
             serializer=ClassListSupplyItemSerializer(list_of_my_class_items, many=True, context={'request':request})
@@ -86,7 +86,7 @@ class SupplyItems(ViewSet):
             try:
                 item_to_delete=ClassListSupplyItem.objects.get(pk=request.data['itemId'])
                 item_to_delete.delete()
-                
+
                 return Response({}, status=status.HTTP_204_NO_CONTENT)
 
             except SupplyItem.DoesNotExist as ex:
