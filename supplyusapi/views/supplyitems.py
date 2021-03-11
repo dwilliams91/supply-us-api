@@ -21,8 +21,24 @@ class SupplyItems(ViewSet):
         
         created_item.name=request.data["name"]
         created_item.type=supply_type
+
+        
+        
+
+
+        # {
+        #     "name": "note cards"
+        #     "type": 1
+        #     "package_type":["50 pack", "100 pack"]
+        # }
         try:
-            # created_item.save()
+            created_item.save()
+            package_types=request.data["package_types"]
+            for item in package_types:
+                new_package_type=PackageType()
+                new_package_type.supply_item=created_item
+                new_package_type.type=item
+                new_package_type.save()
             serializer=SupplyItemsSerializer(created_item, many=False, context={'request':request})
             return Response(serializer.data)
 
