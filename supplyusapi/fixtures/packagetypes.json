@@ -4,7 +4,8 @@
         "pk": 1,
         "fields": {
             "supply_item":1,
-            "type": "individual"
+            "type": "individual",
+            "is_active_type":true
         }
     },
     {
@@ -12,7 +13,8 @@
         "pk": 2,
         "fields": {
             "supply_item":1,
-            "type": "12 count"
+            "type": "12 count",
+            "is_active_type":true
         }
     },
     {
@@ -20,7 +22,8 @@
         "pk": 3,
         "fields": {
             "supply_item":1,
-            "type": "24 count"
+            "type": "24 count",
+            "is_active_type":true
         }
     },
     {
@@ -28,7 +31,8 @@
         "pk": 4,
         "fields": {
             "supply_item":2,
-            "type": "individual"
+            "type": "individual",
+            "is_active_type":true
         }
     },
     {
@@ -36,7 +40,8 @@
         "pk": 5,
         "fields": {
             "supply_item":2,
-            "type": "12 count"
+            "type": "12 count",
+            "is_active_type":true
         }
     },
     {
@@ -44,7 +49,8 @@
         "pk": 6,
         "fields": {
             "supply_item":3,
-            "type": "individual"
+            "type": "individual",
+            "is_active_type":true
         }
     }
 ]
