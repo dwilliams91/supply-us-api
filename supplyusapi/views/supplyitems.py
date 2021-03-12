@@ -22,15 +22,6 @@ class SupplyItems(ViewSet):
         created_item.name=request.data["name"]
         created_item.type=supply_type
 
-        
-        
-
-
-        # {
-        #     "name": "note cards"
-        #     "type": 1
-        #     "package_type":["50 pack", "100 pack"]
-        # }
         try:
             created_item.save()
             package_types=request.data["package_types"]
@@ -44,6 +35,16 @@ class SupplyItems(ViewSet):
 
         except SupplyType.DoesNotExist as ex:
                 return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    def update(self, request, pk=None):
+        supply_item=SupplyItem.objects.get(pk=pk)
+        supply_type=SupplyType.objects.get(pk=request.data["supplyType"])
+
+        supply_item.name=request.data["name"]
+        supply_item.type=supply_type
+        supply_item.save()
+        
+        serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
+        return Response(serializer.data)
         
     @action(methods=['post'],detail=True)
     def typefilter(self,request, pk=None):
