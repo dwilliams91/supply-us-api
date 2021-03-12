@@ -1,6 +1,6 @@
 #!/bin/bash
 git rm -rf --cached db.sqlite3   
-rm -rf rareapi/migrations
+rm -rf supplyusapi/migrations
 rm db.sqlite3
 python3 manage.py migrate
 python3 manage.py makemigrations supplyusapi
