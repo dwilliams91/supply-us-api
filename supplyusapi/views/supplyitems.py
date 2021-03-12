@@ -28,7 +28,7 @@ class SupplyItems(ViewSet):
             for item in package_types:
                 new_package_type=PackageType()
                 new_package_type.supply_item=created_item
-                new_package_type.type=item
+                new_package_type.type=item["type"]
                 new_package_type.save()
             serializer=SupplyItemsSerializer(created_item, many=False, context={'request':request})
             return Response(serializer.data)

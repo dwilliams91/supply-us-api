@@ -21,4 +21,4 @@ class PackageTypes(ViewSet):
 class PackageTypeSerlializer(serializers.ModelSerializer):
     class Meta:
         model=PackageType
-        fields=('id','type')
+        fields=('id','type', "supply_item")
