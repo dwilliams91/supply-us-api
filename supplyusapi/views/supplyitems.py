@@ -47,34 +47,44 @@ class SupplyItems(ViewSet):
         # update packaging
         previous_packages=PackageType.objects.filter(supply_item=supply_item)
         updated_package_types=request.data["package_types"]
-        
+        previous_packages_list=list(previous_packages)
         # compare the lengths to find out if a package type was added or deleted
         # if previous is less than updated, an item was added
-        print("does this hit 1")
         if len(list(previous_packages))<len(updated_package_types):
-            print("does this hit 2")
+            
             for item in updated_package_types:   
                 package_found=previous_packages.filter(pk=item["id"])
                 print(package_found)
                 if len(list(package_found))==0:
                     # if the item doesn't exist, add it. 
-                    print("does this hit 3")
                     new_package_type=PackageType()
                     new_package_type.supply_item=supply_item
                     new_package_type.type=item["type"]
                     new_package_type.is_active_type=1
                     new_package_type.save()
-        # else:
-        #     for item in updated_package_types:
-        #         try:
-        #             package_found=PackageType.objects.get(pk=item["id"])
-        #         except PackageType.DoesNotExist as ex:
-        #             # if the item doesn't exist, add it. 
-        #             new_package_type=PackageType()
-        #             new_package_type.supply_item=supply_item
-        #             new_package_type.type=item["type"]
-        #             new_package_type.is_active_type=1
-        #             new_package_type.save()
+
+        # if an item was delete from the list
+        else:
+            # get a list of all the ids of package types removed from that item
+            keys_of_previous_items=[]
+            keys_of_updated_items=[]
+            for item in previous_packages_list:
+                keys_of_previous_items.append(item.id)
+            for item in updated_package_types:
+                keys_of_updated_items.append(item["id"])
+            removed_package_ids=list(set(keys_of_previous_items)-set(keys_of_updated_items))
+            # go through all the items that are being deleted, and change the is active type to 1
+            for item in removed_package_ids:
+                updated_package=PackageType.objects.get(pk=item)
+                updated_package.is_active_type=0
+                updated_package.save()
+
+
+                
+                
+            
+
+                    
         
 
 
