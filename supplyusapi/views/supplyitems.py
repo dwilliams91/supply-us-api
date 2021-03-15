@@ -29,6 +29,7 @@ class SupplyItems(ViewSet):
                 new_package_type=PackageType()
                 new_package_type.supply_item=created_item
                 new_package_type.type=item["type"]
+                new_package_type.is_active_type=1
                 new_package_type.save()
             serializer=SupplyItemsSerializer(created_item, many=False, context={'request':request})
             return Response(serializer.data)
