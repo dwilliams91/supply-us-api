@@ -12,8 +12,12 @@ class ClassLists(ViewSet):
     def list(self, request):
         # get the current signed in user
         current_user=User.objects.get(auth_token=request.auth)
+        if current_user.is_staff==True:
+            all_class_lists=ClassList.objects.filter(user=current_user.id)
+        else:
+            all_class_lists=ClassList.objects.all()
         # get only the classes created by the user
-        all_class_lists=ClassList.objects.filter(user=current_user.id)
+        
         # send the class to the serializer
         serializer=ClassListSerializer(all_class_lists, many=True, context={'request':request})
         return Response(serializer.data)
