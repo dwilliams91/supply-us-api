@@ -45,7 +45,18 @@ class SupplyItems(ViewSet):
         supply_item.save()
         
         # update packaging
-        related_packages=PackageType.objects.filter(supply_item=supply_item)
+        previous_packages=list(PackageType.objects.filter(supply_item=supply_item))
+        updated_package_types=request.data["package_types"]
+        print(len(previous_packages))
+        print("new packages")
+        print(len(updated_package_types))
+        # compare the lengths to find out if a package type was added or deleted
+        # if previous is greater than updated, an item was added
+        # if len(previous_packages)>len(updated_package_types):
+
+
+
+            
 
         serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
         return Response(serializer.data)
@@ -126,7 +137,7 @@ class SupplyItemsSerializer(serializers.ModelSerializer):
 class PackageTypeSerlializer(serializers.ModelSerializer):
     class Meta:
         model=PackageType
-        fields=('id','type')
+        fields=('id','type', "is_active_type")
 
 class ClassListSupplyItemSerializer(serializers.ModelSerializer):
     supply_item=SupplyItemsSerializer(many=False)
