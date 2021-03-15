@@ -56,7 +56,22 @@ class ClassLists(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+    @action(methods=['post'],detail=False)
+    def joinClass(self,request,pk=None):
+        class_to_join=UserClass()
+        try:
+            current_user=User.objects.get(auth_token=request.auth)
+            class_id=ClassList.objects.get(pk=request.data["classListId"])
+
+            class_to_join.user=current_user
+            class_to_join.class_list=class_id
+            
+            class_to_join.save()
+        except ClassList.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
