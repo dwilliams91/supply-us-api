@@ -45,14 +45,37 @@ class SupplyItems(ViewSet):
         supply_item.save()
         
         # update packaging
-        previous_packages=list(PackageType.objects.filter(supply_item=supply_item))
+        previous_packages=PackageType.objects.filter(supply_item=supply_item)
         updated_package_types=request.data["package_types"]
-        print(len(previous_packages))
-        print("new packages")
-        print(len(updated_package_types))
+        
         # compare the lengths to find out if a package type was added or deleted
-        # if previous is greater than updated, an item was added
-        # if len(previous_packages)>len(updated_package_types):
+        # if previous is less than updated, an item was added
+        print("does this hit 1")
+        if len(list(previous_packages))<len(updated_package_types):
+            print("does this hit 2")
+            for item in updated_package_types:   
+                package_found=previous_packages.filter(pk=item["id"])
+                print(package_found)
+                if len(list(package_found))==0:
+                    # if the item doesn't exist, add it. 
+                    print("does this hit 3")
+                    new_package_type=PackageType()
+                    new_package_type.supply_item=supply_item
+                    new_package_type.type=item["type"]
+                    new_package_type.is_active_type=1
+                    new_package_type.save()
+        # else:
+        #     for item in updated_package_types:
+        #         try:
+        #             package_found=PackageType.objects.get(pk=item["id"])
+        #         except PackageType.DoesNotExist as ex:
+        #             # if the item doesn't exist, add it. 
+        #             new_package_type=PackageType()
+        #             new_package_type.supply_item=supply_item
+        #             new_package_type.type=item["type"]
+        #             new_package_type.is_active_type=1
+        #             new_package_type.save()
+        
 
 
 
