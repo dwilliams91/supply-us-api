@@ -5,7 +5,8 @@ from rest_framework import status
 from django.http import HttpResponseServerError
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from supplyusapi.models import ClassList
+from supplyusapi.models import ClassList, UserClass
+from rest_framework.decorators import action
 
 
 class ClassLists(ViewSet):
@@ -16,7 +17,17 @@ class ClassLists(ViewSet):
             all_class_lists=ClassList.objects.filter(user=current_user.id)
         else:
             all_class_lists=ClassList.objects.all()
-        # get only the classes created by the user
+            for classList in all_class_lists: 
+                classList.joined=None
+                try: 
+                    user_classes=UserClass.objects.get(user=current_user, class_list=classList)
+                    classList.joined=True
+                except UserClass.DoesNotExist as ex:
+                    classList.joined=False
+
+
+
+        
         
         # send the class to the serializer
         serializer=ClassListSerializer(all_class_lists, many=True, context={'request':request})
@@ -46,7 +57,8 @@ class ClassLists(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
+
 class ClassListSerializer(serializers.ModelSerializer):
     class Meta:
         model= ClassList
-        fields=('id','class_name')
+        fields=('id','class_name', 'joined')
