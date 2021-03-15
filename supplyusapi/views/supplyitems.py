@@ -36,14 +36,17 @@ class SupplyItems(ViewSet):
 
         except SupplyType.DoesNotExist as ex:
                 return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
     def update(self, request, pk=None):
         supply_item=SupplyItem.objects.get(pk=pk)
-        supply_type=SupplyType.objects.get(pk=request.data["type"])
-
+        supply_type=SupplyType.objects.get(pk=request.data["supplyType"])
         supply_item.name=request.data["name"]
         supply_item.type=supply_type
         supply_item.save()
         
+        # update packaging
+        related_packages=PackageType.objects.filter(supply_item=supply_item)
+
         serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
         return Response(serializer.data)
         
