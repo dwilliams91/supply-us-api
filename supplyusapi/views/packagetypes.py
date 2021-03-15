@@ -13,8 +13,9 @@ class PackageTypes(ViewSet):
         
         selected_item=SupplyItem.objects.get(pk=pk)
         try:
-            related_packages=PackageType.objects.filter(supply_item=selected_item)   
-            serializer=PackageTypeSerlializer(related_packages, many=True, context={'request',request})
+            related_packages=PackageType.objects.filter(supply_item=selected_item)
+            active_related_packages=related_packages.filter(is_active_type=1)
+            serializer=PackageTypeSerlializer(active_related_packages, many=True, context={'request',request})
             return Response(serializer.data)
         except selected_item.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
