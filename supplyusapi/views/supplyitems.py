@@ -159,28 +159,31 @@ class SupplyItems(ViewSet):
         user=User.objects.get(auth_token=request.auth)
 
         parent_supply_list=list(ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user))
-        
 
-        # add together items of similar type
+        
         final_parent_list={}
         for item in parent_supply_list:
             supply_item=item.supply_item.id
             
-            
             if supply_item in final_parent_list:
-                final_parent_list[supply_item]["number"]+=item.number
-                instance={}
-                instance["description"]=item.description
-                instance["packagetype"]=item.package_type.type
-                final_parent_list[supply_item]["instance"].append(instance)
+                # final_parent_list[supply_item][packaging][0]+=item.number
+                # instance={}
+                # instance["description"]=item.description
+                # instance["packagetype"]=item.package_type.type
+                # final_parent_list[supply_item]["instance"].append(instance)
+                print("do something")
             else:
                 final_parent_list[supply_item]={}
                 final_parent_list[supply_item]["supplyItemName"]=item.supply_item.name
-                final_parent_list[supply_item]["number"]=item.number
+                packaging={}
+                packaging["type"]=item.package_type.type
+                packaging["number"]=item.number
+                
                 instance={}
                 instance["description"]=item.description
-                instance["packagetype"]=item.package_type.type
-                final_parent_list[supply_item]["instance"]=[instance]
+                instance["className"]=item.class_list.class_name
+                packaging["instance"]=[instance]
+                final_parent_list[supply_item]["packaging"]=[packaging]
 
 
         list_to_send=final_parent_list.values()
@@ -190,20 +193,31 @@ class SupplyItems(ViewSet):
         # {
         #     1:{
         #         "supplyItemName":"pencil"
-        #         "number":5
-        #         "classListSupplyItem":[
+        #         "packageType":[
         #             {
+        #             "type":"12 count"
+        #             "number":5
+        #             "instances":[
+        #                 {
         #                 "description":"mechanical"
-        #                 "number":2
-        #                 "package_type":"12 count"
-        #                 "class_list":"5th grade"
-        #             },
-        #             {
-        #                 "description":"pre-sharpened"
-        #                 "number":3
-        #                 "package_type":"12 count"
-        #                 "class_list":"6th grade"
-        #             },
+        #                 "class":"5th grade"
+        #                 },
+        #                 {
+        #                 "description":"presharpened"
+        #                 "class":"6th grade"
+        #                 }
+        #             ]
+        #            },
+        #            {
+        #                "type":"individual"
+        #                "number":5
+        #                "instances":[
+        #                    {
+        #                     "description":"fancy",
+        #                     "class": "4th grade"
+        #                    }
+        #                ]
+        #            }
         #         ]
         #     }
         # }
