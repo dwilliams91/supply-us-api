@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseServerError
 from django.core.exceptions import ValidationError
 from supplyusapi.models import SupplyItem, SupplyType, ClassListSupplyItem, PackageType, ClassList, UserClass
+import collections, functools, operator 
+from operator import itemgetter 
+
 
 class SupplyItems(ViewSet):
     def list(self, request):
@@ -155,37 +158,48 @@ class SupplyItems(ViewSet):
         # send back token and get user
         user=User.objects.get(auth_token=request.auth)
 
-        parent_supply_list=ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user)
-        print(parent_supply_list.query)
-
-
-
-        # get user classes
-        # user_classes=UserClass.objects.filter(user_id=user)
-
-        # # get class lists
-        # list_of_classes=ClassList.objects.all()
-
-        # # 
-        # my_classes=ClassList.objects.filter(related_class.user_id=user)
+        parent_supply_list=list(ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user))
+        print(parent_supply_list)
         
-        # # get the classListSupplyItems that are associated with all of the classes
-        # # list_of_all_my_items=[]
-        # # for item in myClasses:
-        # # list_of_supplies=ClassListSupplyItem.objects.filter(related_class_list=my_classes)
 
-        # serializer=ClassListSerializer(list_of_classes, many=True, context={'request':request})
+        # add together items of similar type
+        final_parent_list={}
+        for item in parent_supply_list:
+            supply_item=item.supply_item.id
+            if supply_item in final_parent_list:
+                final_parent_list[supply_item]["number"]+=item.number
+            else:
+                final_parent_list[supply_item]={}
+                final_parent_list[supply_item]["supplyItemName"]=item.supply_item.name
+                final_parent_list[supply_item]["number"]=item.number
+
+        list_to_send=final_parent_list.values()
+        print(list_to_send)
+        return Response(list_to_send)
+
+        # {
+        #     1:{
+        #         "supplyItemName":"pencil"
+        #         "number":5
+        #         "classListSupplyItem":[
+        #             {
+        #                 "description":"mechanical"
+        #                 "number":2
+        #                 "package_type":"12 count"
+        #                 "class_list":"5th grade"
+        #             },
+        #             {
+        #                 "description":"pre-sharpened"
+        #                 "number":3
+        #                 "package_type":"12 count"
+        #                 "class_list":"6th grade"
+        #             },
+        #         ]
+        #     }
+        # }
+        # serializer=ClassListSupplyItemSerializer(parent_supply_list, many=True, context={'request':request})
         # return Response(serializer.data)
 
-        # Select 
-        # *
-        # from classListSupplyItem as clsi
-        # Join classList as cl on clsi.classListId=cl.id
-        # join user
-
-        
-
-        # get all classListSupplyItems
 
 
         
