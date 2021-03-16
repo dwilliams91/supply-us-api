@@ -159,19 +159,29 @@ class SupplyItems(ViewSet):
         user=User.objects.get(auth_token=request.auth)
 
         parent_supply_list=list(ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user))
-        print(parent_supply_list)
         
 
         # add together items of similar type
         final_parent_list={}
         for item in parent_supply_list:
             supply_item=item.supply_item.id
+            
+            
             if supply_item in final_parent_list:
                 final_parent_list[supply_item]["number"]+=item.number
+                instance={}
+                instance["description"]=item.description
+                instance["packagetype"]=item.package_type.type
+                final_parent_list[supply_item]["instance"].append(instance)
             else:
                 final_parent_list[supply_item]={}
                 final_parent_list[supply_item]["supplyItemName"]=item.supply_item.name
                 final_parent_list[supply_item]["number"]=item.number
+                instance={}
+                instance["description"]=item.description
+                instance["packagetype"]=item.package_type.type
+                final_parent_list[supply_item]["instance"]=[instance]
+
 
         list_to_send=final_parent_list.values()
         print(list_to_send)
