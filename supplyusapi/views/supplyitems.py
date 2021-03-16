@@ -164,14 +164,20 @@ class SupplyItems(ViewSet):
         final_parent_list={}
         for item in parent_supply_list:
             supply_item=item.supply_item.id
+            item_packaging=item.package_type.type
             
             if supply_item in final_parent_list:
-                # final_parent_list[supply_item][packaging][0]+=item.number
-                # instance={}
-                # instance["description"]=item.description
-                # instance["packagetype"]=item.package_type.type
-                # final_parent_list[supply_item]["instance"].append(instance)
-                print("do something")
+                print("same item")
+                # print(item_packaging)
+                # print(final_parent_list[supply_item]["packaging"][0]["type"])
+                for type_of_package in final_parent_list[supply_item]["packaging"]:
+                    print(type_of_package.["type"])
+                # if item_packaging== final_parent_list[supply_item][packaging][0][type]:
+                #     print("same packaging")
+                # else:
+                #     print("different packaging")
+                
+
             else:
                 final_parent_list[supply_item]={}
                 final_parent_list[supply_item]["supplyItemName"]=item.supply_item.name
@@ -184,7 +190,7 @@ class SupplyItems(ViewSet):
                 instance["className"]=item.class_list.class_name
                 packaging["instance"]=[instance]
                 final_parent_list[supply_item]["packaging"]=[packaging]
-
+            
 
         list_to_send=final_parent_list.values()
         print(list_to_send)
@@ -193,7 +199,7 @@ class SupplyItems(ViewSet):
         # {
         #     1:{
         #         "supplyItemName":"pencil"
-        #         "packageType":[
+                #  "package":[
         #             {
         #             "type":"12 count"
         #             "number":5
@@ -221,6 +227,9 @@ class SupplyItems(ViewSet):
         #         ]
         #     }
         # }
+
+
+        
         # serializer=ClassListSupplyItemSerializer(parent_supply_list, many=True, context={'request':request})
         # return Response(serializer.data)
 
