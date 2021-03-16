@@ -171,7 +171,23 @@ class SupplyItems(ViewSet):
                 # print(item_packaging)
                 # print(final_parent_list[supply_item]["packaging"][0]["type"])
                 for type_of_package in final_parent_list[supply_item]["packaging"]:
-                    print(type_of_package.["type"])
+                    if item_packaging==type_of_package["type"]:
+                        print("same packaging")
+                        itemIndex = next((index for (index, d) in enumerate(final_parent_list[supply_item]["packaging"]) if d["type"] == item_packaging), None)
+                        #
+
+                    else:
+                        print("different packaging")
+                        packaging={}
+                        packaging["type"]=item.package_type.type
+                        packaging["number"]=item.number
+                        instance={}
+                        instance["description"]=item.description
+                        instance["className"]=item.class_list.class_name
+                        packaging["instance"]=[instance]
+                        final_parent_list[supply_item]["packaging"].append(packaging)
+
+                        final_parent_list[supply_item]["packaging"]
                 # if item_packaging== final_parent_list[supply_item][packaging][0][type]:
                 #     print("same packaging")
                 # else:
@@ -193,7 +209,7 @@ class SupplyItems(ViewSet):
             
 
         list_to_send=final_parent_list.values()
-        print(list_to_send)
+
         return Response(list_to_send)
 
         # {
