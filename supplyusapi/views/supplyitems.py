@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework.decorators import action
+from django.contrib.auth.models import User
 
 from django.http import HttpResponseServerError
 from django.core.exceptions import ValidationError
-from supplyusapi.models import SupplyItem, SupplyType, ClassListSupplyItem, PackageType, ClassList
+from supplyusapi.models import SupplyItem, SupplyType, ClassListSupplyItem, PackageType, ClassList, UserClass
 
 class SupplyItems(ViewSet):
     def list(self, request):
@@ -80,17 +81,6 @@ class SupplyItems(ViewSet):
                 updated_package.save()
 
 
-                
-                
-            
-
-                    
-        
-
-
-
-            
-
         serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
         return Response(serializer.data)
         
@@ -160,13 +150,50 @@ class SupplyItems(ViewSet):
             except SupplyItem.DoesNotExist as ex:
                 return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
+    @action(methods=['GET'], detail=False)
+    def addingLists(self, request, pk=None):
+        # send back token and get user
+        user=User.objects.get(auth_token=request.auth)
+
+        parent_supply_list=ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user)
+        print(parent_supply_list.query)
+
+
+
+        # get user classes
+        # user_classes=UserClass.objects.filter(user_id=user)
+
+        # # get class lists
+        # list_of_classes=ClassList.objects.all()
+
+        # # 
+        # my_classes=ClassList.objects.filter(related_class.user_id=user)
+        
+        # # get the classListSupplyItems that are associated with all of the classes
+        # # list_of_all_my_items=[]
+        # # for item in myClasses:
+        # # list_of_supplies=ClassListSupplyItem.objects.filter(related_class_list=my_classes)
+
+        # serializer=ClassListSerializer(list_of_classes, many=True, context={'request':request})
+        # return Response(serializer.data)
+
+        # Select 
+        # *
+        # from classListSupplyItem as clsi
+        # Join classList as cl on clsi.classListId=cl.id
+        # join user
+
+        
+
+        # get all classListSupplyItems
+
 
         
 class SupplyItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model=SupplyItem
         fields=('id', 'type', 'name')
-        # depth=1
+        depth=1
 class PackageTypeSerlializer(serializers.ModelSerializer):
     class Meta:
         model=PackageType
@@ -178,3 +205,18 @@ class ClassListSupplyItemSerializer(serializers.ModelSerializer):
     class Meta:
         model= ClassListSupplyItem
         fields=('id', 'class_list', 'supply_item', 'number', 'description', 'package_type')
+
+# EXTRA SERIALIZERS FOR TESTING
+
+class ClassListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= ClassList
+        fields=('id','class_name', 'joined',"related_classes")
+        
+
+class UserClassSerlializer(serializers.ModelSerializer):
+    class_list=ClassListSerializer(many=True)
+    class Meta:
+        model=UserClass
+        fields=('id','user', "class_list")
+
