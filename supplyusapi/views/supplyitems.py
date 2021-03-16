@@ -160,24 +160,35 @@ class SupplyItems(ViewSet):
 
         parent_supply_list=list(ClassListSupplyItem.objects.filter(class_list__relatedclasses__user=user))
 
+        counter=0
         
         final_parent_list={}
         for item in parent_supply_list:
             supply_item=item.supply_item.id
             item_packaging=item.package_type.type
             
+            # if the item exists in the diction, do the if, else create it
             if supply_item in final_parent_list:
-                print("same item")
-                # print(item_packaging)
-                # print(final_parent_list[supply_item]["packaging"][0]["type"])
+                # go through the list of different packages associated with the item. 
+                # so this should 
                 for type_of_package in final_parent_list[supply_item]["packaging"]:
+                    # if the package type of the new item is the same as the package type of the old items,
                     if item_packaging==type_of_package["type"]:
-                        print("same packaging")
+                        # so same item and same package type
+                        
+                        # find the index of the same item and same package type
                         itemIndex = next((index for (index, d) in enumerate(final_parent_list[supply_item]["packaging"]) if d["type"] == item_packaging), None)
-                        #
-
+                        # add the items together
+                        final_parent_list[supply_item]["packaging"][itemIndex]["number"]+=item.number
+                        # create a new instance
+                        instance={}
+                        instance["description"]=item.description
+                        instance["className"]=item.class_list.class_name
+                        # append that instance where needed
+                        final_parent_list[supply_item]["packaging"][itemIndex]["instance"].append(instance)
+                        break
                     else:
-                        print("different packaging")
+                        # same item new package type
                         packaging={}
                         packaging["type"]=item.package_type.type
                         packaging["number"]=item.number
@@ -186,21 +197,18 @@ class SupplyItems(ViewSet):
                         instance["className"]=item.class_list.class_name
                         packaging["instance"]=[instance]
                         final_parent_list[supply_item]["packaging"].append(packaging)
+                        break
 
-                        final_parent_list[supply_item]["packaging"]
-                # if item_packaging== final_parent_list[supply_item][packaging][0][type]:
-                #     print("same packaging")
-                # else:
-                #     print("different packaging")
-                
+                        
 
             else:
+                # the item is not in the list at all
+
                 final_parent_list[supply_item]={}
                 final_parent_list[supply_item]["supplyItemName"]=item.supply_item.name
                 packaging={}
                 packaging["type"]=item.package_type.type
                 packaging["number"]=item.number
-                
                 instance={}
                 instance["description"]=item.description
                 instance["className"]=item.class_list.class_name
