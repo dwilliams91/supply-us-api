@@ -29,6 +29,14 @@ class SupplyItems(ViewSet):
         try:
             created_item.save()
             package_types=request.data["package_types"]
+
+            if len(package_types)==0:
+                new_package_type=PackageType()
+                new_package_type.supply_item=created_item
+                new_package_type.type="individual"
+                new_package_type.is_active_type=1
+                new_package_type.save()
+
             for item in package_types:
                 new_package_type=PackageType()
                 new_package_type.supply_item=created_item
@@ -257,42 +265,6 @@ class SupplyItems(ViewSet):
         #     }
         # }
 
-
-        #     1:{
-        #         "supplyItemName":"pencil"
-                #  "package":[
-        #             {
-        #             "type":"12 count"
-        #             "number":5
-        #             "instances":[
-        #                 {
-        #                 "description":"mechanical"
-        #                 "class":"5th grade"
-        #                 },
-        #                 {
-        #                 "description":"presharpened"
-        #                 "class":"6th grade"
-        #                 }
-        #             ]
-        #            },
-        #            {
-        #                "type":"individual"
-        #                "number":5
-        #                "instances":[
-        #                    {
-        #                     "description":"fancy",
-        #                     "class": "4th grade"
-        #                    }
-        #                ]
-        #            }
-        #         ]
-        #     }
-        # }
-
-
-        
-        # serializer=ClassListSupplyItemSerializer(parent_supply_list, many=True, context={'request':request})
-        # return Response(serializer.data)
 
 
 
