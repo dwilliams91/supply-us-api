@@ -73,7 +73,8 @@ class ClassLists(ViewSet):
     
     @action(methods=['delete'],detail=True)
     def leaveClass(self,request,pk=None):
-        class_to_delete=UserClass.objects.get(pk=pk)
+        current_user=User.objects.get(auth_token=request.auth)
+        class_to_delete=UserClass.objects.get(class_list_id=pk, user_id=current_user)
         try:
             class_to_delete.delete()
         except UserClass.DoesNotExist as ex:
