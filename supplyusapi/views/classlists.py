@@ -25,10 +25,6 @@ class ClassLists(ViewSet):
                 except UserClass.DoesNotExist as ex:
                     classList.joined=False
 
-
-
-        
-        
         # send the class to the serializer
         serializer=ClassListSerializer(all_class_lists, many=True, context={'request':request})
         return Response(serializer.data)
@@ -61,13 +57,22 @@ class ClassLists(ViewSet):
     def joinClass(self,request,pk=None):
         class_to_join=UserClass()
         try:
+            
             current_user=User.objects.get(auth_token=request.auth)
             class_id=ClassList.objects.get(pk=request.data["classListId"])
+
+            previous_joined=UserClass.objects.get(user=current_user, class_list_id=class_id)
+
 
             class_to_join.user=current_user
             class_to_join.class_list=class_id
 
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except UserClass.DoesNotExist as ex:
+            class_to_join.user=current_user
+            class_to_join.class_list=class_id
             class_to_join.save()
+            return Response(status=status.HTTP_201_CREATED)
         except ClassList.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
     
