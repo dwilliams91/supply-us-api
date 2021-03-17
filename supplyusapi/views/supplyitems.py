@@ -184,6 +184,7 @@ class SupplyItems(ViewSet):
                         instance={}
                         instance["description"]=item.description
                         instance["className"]=item.class_list.class_name
+                        instance["number"]=item.number
                         # append that instance where needed
                         final_parent_list[supply_item]["packaging"][itemIndex]["instance"].append(instance)
                         break
@@ -195,7 +196,9 @@ class SupplyItems(ViewSet):
                         instance={}
                         instance["description"]=item.description
                         instance["className"]=item.class_list.class_name
+                        instance["number"]=item.number
                         packaging["instance"]=[instance]
+                        
                         final_parent_list[supply_item]["packaging"].append(packaging)
                         break
 
@@ -212,7 +215,9 @@ class SupplyItems(ViewSet):
                 instance={}
                 instance["description"]=item.description
                 instance["className"]=item.class_list.class_name
+                instance["number"]=item.number
                 packaging["instance"]=[instance]
+                
                 final_parent_list[supply_item]["packaging"]=[packaging]
             
 
