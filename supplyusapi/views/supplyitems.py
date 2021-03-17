@@ -258,6 +258,38 @@ class SupplyItems(ViewSet):
         # }
 
 
+        #     1:{
+        #         "supplyItemName":"pencil"
+                #  "package":[
+        #             {
+        #             "type":"12 count"
+        #             "number":5
+        #             "instances":[
+        #                 {
+        #                 "description":"mechanical"
+        #                 "class":"5th grade"
+        #                 },
+        #                 {
+        #                 "description":"presharpened"
+        #                 "class":"6th grade"
+        #                 }
+        #             ]
+        #            },
+        #            {
+        #                "type":"individual"
+        #                "number":5
+        #                "instances":[
+        #                    {
+        #                     "description":"fancy",
+        #                     "class": "4th grade"
+        #                    }
+        #                ]
+        #            }
+        #         ]
+        #     }
+        # }
+
+
         
         # serializer=ClassListSupplyItemSerializer(parent_supply_list, many=True, context={'request':request})
         # return Response(serializer.data)
