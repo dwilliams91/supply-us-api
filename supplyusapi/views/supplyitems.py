@@ -60,6 +60,7 @@ class SupplyItems(ViewSet):
         previous_packages=PackageType.objects.filter(supply_item=supply_item)
         updated_package_types=request.data["package_types"]
         previous_packages_list=list(previous_packages)
+        
         # compare the lengths to find out if a package type was added or deleted
         # if previous is less than updated, an item was added
         if len(list(previous_packages))<len(updated_package_types):
@@ -78,6 +79,8 @@ class SupplyItems(ViewSet):
         # if an item was delete from the list
         else:
             # get a list of all the ids of package types removed from that item
+            if len(updated_package_types)==0:
+                print("removed last package type")
             keys_of_previous_items=[]
             keys_of_updated_items=[]
             for item in previous_packages_list:
