@@ -77,22 +77,43 @@ class SupplyItems(ViewSet):
                     new_package_type.save()
 
         # if an item was delete from the list
-        else:
+        elif len(list(previous_packages))>len(updated_package_types):
             # get a list of all the ids of package types removed from that item
-            if len(updated_package_types)==0:
-                print("removed last package type")
+            
             keys_of_previous_items=[]
             keys_of_updated_items=[]
             for item in previous_packages_list:
                 keys_of_previous_items.append(item.id)
             for item in updated_package_types:
                 keys_of_updated_items.append(item["id"])
+            print(keys_of_previous_items)
+            print(keys_of_updated_items)
+
             removed_package_ids=list(set(keys_of_previous_items)-set(keys_of_updated_items))
             # go through all the items that are being deleted, and change the is active type to 1
             for item in removed_package_ids:
                 updated_package=PackageType.objects.get(pk=item)
                 updated_package.is_active_type=0
                 updated_package.save()
+        else:
+            keys_of_previous_items=[]
+            keys_of_updated_items=[]
+            for item in previous_packages_list:
+                keys_of_previous_items.append(item.id)
+            for item in updated_package_types:
+                keys_of_updated_items.append(item["id"])
+            if keys_of_previous_items != keys_of_updated_items:
+                for instance in keys_of_previous_items:
+                    updated_package=PackageType.objects.get(pk=instance)
+                    updated_package.is_active_type=0
+                    updated_package.save()
+                for instance in keys_of_updated_items:
+                    new_package_type=PackageType()
+                    new_package_type.supply_item=supply_item
+                    new_package_type.type=item["type"]
+                    new_package_type.is_active_type=1
+                    new_package_type.save()
+            
 
 
         serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
