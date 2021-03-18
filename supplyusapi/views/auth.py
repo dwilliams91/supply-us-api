@@ -51,9 +51,13 @@ def register_user(request):
 
     # Load the JSON string of the request body into a dict
     req_body = json.loads(request.body.decode())
-
     # Create a new user by invoking the `create_user` helper method
     # on Django's built-in User model
+    if req_body["is_staff"]==0:
+        is_staff=False
+    else:
+        is_staff=True
+    print(is_staff)
     new_user = User.objects.create_user(
         password=req_body['password'],
         last_login=None,
@@ -61,10 +65,12 @@ def register_user(request):
         first_name=req_body['first_name'],
         last_name=req_body['last_name'],
         email=req_body['email'],
-        is_staff=req_body['is_staff'],
+        is_staff=is_staff,
         is_active=True,
         date_joined=datetime.now()
     )
+
+
 
     # Now save the extra info in the rareapi_rareuser table
     
@@ -78,5 +84,4 @@ def register_user(request):
     # Return the token to the client
     data = json.dumps({"token": token.key})
     return HttpResponse(data, content_type='application/json')
- 
-  
+
