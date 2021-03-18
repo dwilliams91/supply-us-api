@@ -57,7 +57,8 @@ class SupplyItems(ViewSet):
         supply_item.save()
         
         # update packaging
-        previous_packages=PackageType.objects.filter(supply_item=supply_item)
+        all_previous_packages=PackageType.objects.filter(supply_item=supply_item)
+        previous_packages=all_previous_packages.filter(is_active_type=1)
         updated_package_types=request.data["package_types"]
         previous_packages_list=list(previous_packages)
         
@@ -67,7 +68,6 @@ class SupplyItems(ViewSet):
             
             for item in updated_package_types:   
                 package_found=previous_packages.filter(pk=item["id"])
-                print(package_found)
                 if len(list(package_found))==0:
                     # if the item doesn't exist, add it. 
                     new_package_type=PackageType()
@@ -86,8 +86,7 @@ class SupplyItems(ViewSet):
                 keys_of_previous_items.append(item.id)
             for item in updated_package_types:
                 keys_of_updated_items.append(item["id"])
-            print(keys_of_previous_items)
-            print(keys_of_updated_items)
+
 
             removed_package_ids=list(set(keys_of_previous_items)-set(keys_of_updated_items))
             # go through all the items that are being deleted, and change the is active type to 1
