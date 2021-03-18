@@ -98,9 +98,12 @@ class SupplyItems(ViewSet):
     @action(methods=['post'],detail=True)
     def typefilter(self,request, pk=None):
         # get the type that was selected
-        selected_type=SupplyType.objects.get(pk=pk)
+        if int(pk)==0:
+            filtered_items=SupplyItem.objects.all()
+        else:
+            selected_type=SupplyType.objects.get(pk=pk)
         # get the items from that type
-        filtered_items=SupplyItem.objects.filter(type=selected_type)
+            filtered_items=SupplyItem.objects.filter(type=selected_type)
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
