@@ -15,6 +15,10 @@ class ClassLists(ViewSet):
         current_user=User.objects.get(auth_token=request.auth)
         if current_user.is_staff==True:
             all_class_lists=ClassList.objects.filter(user=current_user.id)
+
+            if current_user.is_superuser==True:
+
+                all_class_lists=ClassList.objects.all()
         else:
             all_class_lists=ClassList.objects.all()
             for classList in all_class_lists: 

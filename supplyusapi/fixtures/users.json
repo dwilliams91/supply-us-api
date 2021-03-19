@@ -5,7 +5,7 @@
         "fields": {
             "password": "pbkdf2_sha256$216000$xy1ADDwHRjrh$1udU9G8itv3N78hiH08Lx3Qkomr4vQ7M63PS04y+aJQ=",
             "last_login": null,
-            "is_superuser": false,
+            "is_superuser": true,
             "username": "david@david.com",
             "first_name": "David",
             "last_name": "Williams",

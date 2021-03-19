@@ -27,7 +27,9 @@ def login_user(request):
             if authenticated_user.is_staff:
                 data = json.dumps(
                     {"valid": True, "token": token.key, "is_staff": True})
-
+                if authenticated_user.is_superuser:
+                    data = json.dumps(
+                    {"valid": True, "token": token.key, "is_staff": True, "is_superuser":True})
             else:
                 # send else send back false
                 data = json.dumps(
