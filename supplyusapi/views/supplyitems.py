@@ -101,17 +101,23 @@ class SupplyItems(ViewSet):
                 keys_of_previous_items.append(item.id)
             for item in updated_package_types:
                 keys_of_updated_items.append(item["id"])
+
             if keys_of_previous_items != keys_of_updated_items:
+                print(keys_of_previous_items)
+                print(keys_of_updated_items)
                 for instance in keys_of_previous_items:
-                    updated_package=PackageType.objects.get(pk=instance)
-                    updated_package.is_active_type=0
-                    updated_package.save()
+                    if instance not in keys_of_updated_items:
+                        updated_package=PackageType.objects.get(pk=instance)
+                        updated_package.is_active_type=0
+                        updated_package.save()
                 for instance in keys_of_updated_items:
-                    new_package_type=PackageType()
-                    new_package_type.supply_item=supply_item
-                    new_package_type.type=item["type"]
-                    new_package_type.is_active_type=1
-                    new_package_type.save()
+                    if instance not in keys_of_previous_items:
+                        print(instance)
+                        new_package_type=PackageType()
+                        new_package_type.supply_item=supply_item
+                        new_package_type.type=item["type"]
+                        new_package_type.is_active_type=1
+                        new_package_type.save()
             
 
 
