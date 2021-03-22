@@ -17,6 +17,19 @@ class Admins(ViewSet):
             pending_teachers=User.objects.filter(is_active=0)
         serializer=UserSerlializer(pending_teachers, many=True, context={'request':request})
         return Response(serializer.data)
+    
+    @action(methods=['put'],detail=False)
+    def ApproveTeachers(self,request,pk=None):
+        current_user=User.objects.get(auth_token=request.auth)
+        if current_user.is_superuser==True:
+            pending_teachers=User.objects.get(email=request.data["email"])
+            print(pending_teachers)
+            pending_teachers.is_active=1
+            pending_teachers.save()
+        serializer=UserSerlializer(pending_teachers, many=False, context={'request':request})
+
+        return Response(serializer.data)
+
 class UserSerlializer(serializers.ModelSerializer):
     class Meta:
         model=User
