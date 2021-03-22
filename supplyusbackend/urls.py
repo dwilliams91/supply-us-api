@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 from supplyusapi.views import login_user, register_user
-from supplyusapi.views import ClassLists, SupplyTypes, SupplyItems, PackageTypes
+from supplyusapi.views import ClassLists, SupplyTypes, SupplyItems, PackageTypes, Admins
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'classlists', ClassLists, 'classlist')
 router.register(r'supplytypes', SupplyTypes, 'supplytype')
 router.register(r'supplyitems', SupplyItems, 'supplyitem')
 router.register(r'packagetypes', PackageTypes, 'packagetype')
+router.register(r'admins', Admins, 'admin' )
 
 urlpatterns = [
     path('', include(router.urls)),
