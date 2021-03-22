@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from rest_framework.decorators import action
+
 
 
 @csrf_exempt
@@ -57,10 +59,7 @@ def register_user(request):
     # on Django's built-in User model
     if req_body["is_staff"]==0:
         is_staff=False
-    else:
-        is_staff=True
-    print(is_staff)
-    new_user = User.objects.create_user(
+        new_user = User.objects.create_user(
         password=req_body['password'],
         last_login=None,
         username=req_body['email'],
@@ -71,6 +70,20 @@ def register_user(request):
         is_active=True,
         date_joined=datetime.now()
     )
+    else:
+        is_staff=True
+        new_user = User.objects.create_user(
+        password=req_body['password'],
+        last_login=None,
+        username=req_body['email'],
+        first_name=req_body['first_name'],
+        last_name=req_body['last_name'],
+        email=req_body['email'],
+        is_staff=is_staff,
+        is_active=False,
+        date_joined=datetime.now()
+    )
+    
 
 
 
