@@ -62,11 +62,31 @@ class SupplyItems(ViewSet):
         updated_package_types=request.data["package_types"]
         previous_packages_list=list(previous_packages)
         
-        print(updated_package_types)
+        just_previous_types=[]
         for previous_item in previous_packages_list:
-            print(previous_item.type)
-            for updated_item in updated_package_types:
-                if previous_item.type==updated_item["type"]:
+            just_previous_types.append(previous_item.type)
+        just_updated_types=[]
+        for updated_item in updated_package_types:
+            just_updated_types.append(updated_item["type"])
+        
+        def diff(list1, list2):
+            return list(set(list1).symmetric_difference(set(list2)))  # or return list(set(list1) ^ set(list2))
+            
+        packaging_changes=diff(just_previous_types,just_updated_types)
+        print(packaging_changes)
+        for item in packaging_changes:
+            try:
+                deleted_item=PackageType.objects.get(type=item, supply_item=supply_item )
+                deleted_item.is_active_type=0
+            except PackageType.DoesNotExist as ex:
+                new_package_type=PackageType()
+                new_package_type.supply_item=supply_item
+                new_package_type.type=item["type"]
+                new_package_type.is_active_type=1
+                new_package_type.save()
+
+        
+                    
                     
                 
             
