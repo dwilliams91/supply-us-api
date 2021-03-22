@@ -62,64 +62,34 @@ class SupplyItems(ViewSet):
         updated_package_types=request.data["package_types"]
         previous_packages_list=list(previous_packages)
         
-        # compare the lengths to find out if a package type was added or deleted
-        # if previous is less than updated, an item was added
-        if len(list(previous_packages))<len(updated_package_types):
+        # get arrays of just the types
+        just_previous_types=[]
+        for previous_item in previous_packages_list:
+            just_previous_types.append(previous_item.type)
+        just_updated_types=[]
+        for updated_item in updated_package_types:
+            just_updated_types.append(updated_item["type"])
+        
+        # used stack overflow to find function to get only the differences. This returns only items that have either been added or deleted
+        def diff(list1, list2):
+            return list(set(list1).symmetric_difference(set(list2)))  # or return list(set(list1) ^ set(list2))
             
-            for item in updated_package_types:   
-                package_found=previous_packages.filter(pk=item["id"])
-                if len(list(package_found))==0:
-                    # if the item doesn't exist, add it. 
-                    new_package_type=PackageType()
-                    new_package_type.supply_item=supply_item
-                    new_package_type.type=item["type"]
-                    new_package_type.is_active_type=1
-                    new_package_type.save()
-
-        # if an item was delete from the list
-        elif len(list(previous_packages))>len(updated_package_types):
-            # get a list of all the ids of package types removed from that item
-            
-            keys_of_previous_items=[]
-            keys_of_updated_items=[]
-            for item in previous_packages_list:
-                keys_of_previous_items.append(item.id)
-            for item in updated_package_types:
-                keys_of_updated_items.append(item["id"])
-
-
-            removed_package_ids=list(set(keys_of_previous_items)-set(keys_of_updated_items))
-            # go through all the items that are being deleted, and change the is active type to 1
-            for item in removed_package_ids:
-                updated_package=PackageType.objects.get(pk=item)
-                updated_package.is_active_type=0
-                updated_package.save()
-        else:
-            keys_of_previous_items=[]
-            keys_of_updated_items=[]
-            for item in previous_packages_list:
-                keys_of_previous_items.append(item.id)
-            for item in updated_package_types:
-                keys_of_updated_items.append(item["id"])
-
-            if keys_of_previous_items != keys_of_updated_items:
-                print(keys_of_previous_items)
-                print(keys_of_updated_items)
-                for instance in keys_of_previous_items:
-                    if instance not in keys_of_updated_items:
-                        updated_package=PackageType.objects.get(pk=instance)
-                        updated_package.is_active_type=0
-                        updated_package.save()
-                for instance in keys_of_updated_items:
-                    if instance not in keys_of_previous_items:
-                        print(instance)
-                        new_package_type=PackageType()
-                        new_package_type.supply_item=supply_item
-                        new_package_type.type=item["type"]
-                        new_package_type.is_active_type=1
-                        new_package_type.save()
-            
-
+        packaging_changes=diff(just_previous_types,just_updated_types)
+        
+        # go through changes. If the item is to be deleted, find it in the database. If it is not in the database it was added so created it. 
+        for item in packaging_changes:
+            try:
+                deleted_item=PackageType.objects.get(type=item, supply_item=supply_item, is_active_type=1)
+                
+                deleted_item.is_active_type=0
+                deleted_item.save()
+            except PackageType.DoesNotExist as ex:
+                
+                new_package_type=PackageType()
+                new_package_type.supply_item=supply_item
+                new_package_type.type=item
+                new_package_type.is_active_type=1
+                new_package_type.save()
 
         serializer=SupplyItemsSerializer(supply_item, many=False, context={'request':request})
         return Response(serializer.data)
