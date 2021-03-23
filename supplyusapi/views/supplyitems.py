@@ -109,7 +109,7 @@ class SupplyItems(ViewSet):
     @action(methods=['post'],detail=False)
     def searchfilter(self,request,pk=None):
 
-        filtered_items=SupplyItem.objects.filter(name__startswith=request.data["searchTerm"])
+        filtered_items=SupplyItem.objects.filter(name__contains=request.data["searchTerm"])
         serializer=SupplyItemsSerializer(filtered_items, many=True, context={'request':request})
         return Response(serializer.data)
 
