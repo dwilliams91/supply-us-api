@@ -1,4 +1,5 @@
-SELECT * FROM supplyusapi_packagetype
+DELETE FROM supplyusapi_supplyItem where id=17
+
 
 DELETE From auth_user
 Where id=6
