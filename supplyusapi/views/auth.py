@@ -57,8 +57,22 @@ def register_user(request):
     req_body = json.loads(request.body.decode())
     # Create a new user by invoking the `create_user` helper method
     # on Django's built-in User model
+    teacher_code= req_body['teacher_code']
     if req_body["is_staff"]==0:
         is_staff=False
+        new_user = User.objects.create_user(
+        password=req_body['password'],
+        last_login=None,
+        username=req_body['email'],
+        first_name=req_body['first_name'],
+        last_name=req_body['last_name'],
+        email=req_body['email'],
+        is_staff=is_staff,
+        is_active=True,
+        date_joined=datetime.now()
+    )
+    elif (teacher_code=="akiva"):
+        is_staff=True
         new_user = User.objects.create_user(
         password=req_body['password'],
         last_login=None,
@@ -83,7 +97,6 @@ def register_user(request):
         is_active=False,
         date_joined=datetime.now()
     )
-    
 
 
 
