@@ -31,5 +31,38 @@
             "description":"pre-sharpened",
             "package_type":2
         }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 4,
+        "fields": {
+            "class_list":1,
+            "supply_item": 8,
+            "number":3,
+            "description":"college ruled",
+            "package_type":12
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 4,
+        "fields": {
+            "class_list":2,
+            "supply_item": 8,
+            "number":3,
+            "description":"college ruled",
+            "package_type":12
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 4,
+        "fields": {
+            "class_list":2,
+            "supply_item": 7,
+            "number":1,
+            "description":"hand held",
+            "package_type":11
+        }
     }
 ]
