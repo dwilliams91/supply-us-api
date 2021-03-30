@@ -45,23 +45,23 @@
     },
     {
         "model": "supplyusapi.ClassListSupplyItem",
-        "pk": 4,
+        "pk": 5,
         "fields": {
             "class_list":2,
             "supply_item": 8,
-            "number":3,
+            "number":1,
             "description":"college ruled",
-            "package_type":12
+            "package_type":13
         }
     },
     {
         "model": "supplyusapi.ClassListSupplyItem",
-        "pk": 4,
+        "pk": 6,
         "fields": {
             "class_list":2,
             "supply_item": 7,
             "number":1,
-            "description":"hand held",
+            "description":"soft and large enough to fit scissors",
             "package_type":11
         }
     }
