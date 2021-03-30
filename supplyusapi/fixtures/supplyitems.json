@@ -28,5 +28,95 @@
             "shopping_link":"https://www.amazon.com/AmazonBasics-Round-Binder-Mixed-4-Pack/dp/B07SL5Q3RN/ref=asc_df_B07SL5Q3RN/?tag=hyprod-20&linkCode=df0&hvadid=385590137473&hvpos=&hvnetw=g&hvrand=1090611728224805563&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9013203&hvtargid=pla-848945103260&psc=1&tag=&ref=&adgrpid=77529735486&hvpone=&hvptwo=&hvadid=385590137473&hvpos=&hvnetw=g&hvrand=1090611728224805563&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9013203&hvtargid=pla-848945103260",
             "imageURL":"https://images.uline.com/is/image//content/dam/images/S/S22000/S-21760W.jpg?$Mobile_SI$&iccEmbed=1&icc=AdobeRGB"
         }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 4,
+        "fields": {
+            "name": "pens",
+            "type": 1,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 5,
+        "fields": {
+            "name": "pencil sharpener",
+            "type": 1,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 6,
+        "fields": {
+            "name": "folders",
+            "type": 2,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 7,
+        "fields": {
+            "name": "pencil pack",
+            "type": 2,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 8,
+        "fields": {
+            "name": "notebook paper",
+            "type": 3,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 9,
+        "fields": {
+            "name": "printer paper",
+            "type": 3,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 10,
+        "fields": {
+            "name": "note cards",
+            "type": 3,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 11,
+        "fields": {
+            "name": "rulers",
+            "type": 4,
+            "shopping_link":"",
+            "imageURL":""
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyItem",
+        "pk": 12,
+        "fields": {
+            "name": "glue sticks",
+            "type": 4,
+            "shopping_link":"",
+            "imageURL":""
+        }
     }
 ]

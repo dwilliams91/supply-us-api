@@ -12,5 +12,26 @@
         "fields": {
             "type": "organizer"
         }
+    },
+    {
+        "model": "supplyusapi.SupplyType",
+        "pk": 3,
+        "fields": {
+            "type": "paper"
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyType",
+        "pk": 4,
+        "fields": {
+            "type": "craft supplies"
+        }
+    },
+    {
+        "model": "supplyusapi.SupplyType",
+        "pk": 5,
+        "fields": {
+            "type": "cleaning supplies"
+        }
     }
 ]

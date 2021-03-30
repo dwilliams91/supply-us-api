@@ -52,5 +52,131 @@
             "type": "individual",
             "is_active_type":true
         }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 7,
+        "fields": {
+            "supply_item":4,
+            "type": "12 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 8,
+        "fields": {
+            "supply_item":4,
+            "type": "24 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 9,
+        "fields": {
+            "supply_item":5,
+            "type": "individual",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 10,
+        "fields": {
+            "supply_item":6,
+            "type": "individual",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 11,
+        "fields": {
+            "supply_item":7,
+            "type": "individual",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 12,
+        "fields": {
+            "supply_item":8,
+            "type": "100 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 13,
+        "fields": {
+            "supply_item":8,
+            "type": "200 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 14,
+        "fields": {
+            "supply_item":9,
+            "type": "100 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 15,
+        "fields": {
+            "supply_item":9,
+            "type": "200 count",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 16,
+        "fields": {
+            "supply_item":10,
+            "type": "50 pack",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 17,
+        "fields": {
+            "supply_item":10,
+            "type": "100 pack",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 18,
+        "fields": {
+            "supply_item":11,
+            "type": "individual",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 19,
+        "fields": {
+            "supply_item":12,
+            "type": "individual",
+            "is_active_type":true
+        }
+    },
+    {
+        "model": "supplyusapi.PackageType",
+        "pk": 20,
+        "fields": {
+            "supply_item":12,
+            "type": "6 pack",
+            "is_active_type":true
+        }
     }
 ]

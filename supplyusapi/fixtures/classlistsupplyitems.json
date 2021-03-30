@@ -31,5 +31,38 @@
             "description":"pre-sharpened",
             "package_type":2
         }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 4,
+        "fields": {
+            "class_list":1,
+            "supply_item": 8,
+            "number":3,
+            "description":"college ruled",
+            "package_type":12
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 5,
+        "fields": {
+            "class_list":2,
+            "supply_item": 8,
+            "number":1,
+            "description":"college ruled",
+            "package_type":13
+        }
+    },
+    {
+        "model": "supplyusapi.ClassListSupplyItem",
+        "pk": 6,
+        "fields": {
+            "class_list":2,
+            "supply_item": 7,
+            "number":1,
+            "description":"soft and large enough to fit scissors",
+            "package_type":11
+        }
     }
 ]
